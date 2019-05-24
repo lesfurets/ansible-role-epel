@@ -1,0 +1,11 @@
+---
+- name: Check if EPEL repo is already configured.
+  stat:
+    path: /etc/yum.repos.d/epel.repo
+  register: epel_present
+
+- name: Install EPEL repo.
+  yum:
+    name: epel-release
+    state: present
+  when: not epel_present.stat.exists
